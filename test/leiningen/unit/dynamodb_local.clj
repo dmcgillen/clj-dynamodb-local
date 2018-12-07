@@ -1,12 +1,14 @@
 (ns leiningen.unit.dynamodb-local
-  (:require [leiningen.dynamodb-local :refer :all]
+  (:require [dynamodb-local.core :refer :all]
             [environ.core :refer [env]]
             [midje
              [sweet :refer :all]
              [util :refer [testable-privates]]])
   (:import [java.io File]))
 
-(testable-privates leiningen.dynamodb-local build-dynamo-command ensure-installed)
+(testable-privates dynamodb-local.core build-dynamo-command)
+
+(def log-nothing (constantly nil))
 
 (def ^:private dynamo-directory
   "The directory where DynamoDB Local is installed."
@@ -25,7 +27,7 @@
         (let [project (merge {:some-key "some-val"}
                              (when ?dynamodb-local-config
                                {:dynamodb-local ?dynamodb-local-config}))]
-          (build-dynamo-command project)) => ?command)
+          (build-dynamo-command log-nothing project)) => ?command)
   ?dynamodb-local-config                                       ?command
   nil                                                          (str "java  " dynamo-lib-paths " -port 8000 -dbPath " dynamo-directory)
   {}                                                           (str "java  " dynamo-lib-paths " -port 8000 -dbPath " dynamo-directory)
@@ -42,7 +44,7 @@
    (fact "Build dynamo command allows port to be specified as an environment variable"
          (let [project {:some-key "some-val"
                         :dynamodb-local ?dynamodb-local-config}]
-           (build-dynamo-command project) => (str "java  " dynamo-lib-paths " -port " ?port " -dbPath " dynamo-directory)
+           (build-dynamo-command log-nothing project) => (str "java  " dynamo-lib-paths " -port " ?port " -dbPath " dynamo-directory)
            (provided
             (env :dynamodb-port "8000") => "7777")))
    ?dynamodb-local-config ?port
@@ -50,13 +52,13 @@
    {:port "9999"}         "9999")
 
   (fact "Ensure installed does not download DynamoDB Local if it already has been"
-        (ensure-installed) => nil
+        (ensure-installed log-nothing) => nil
         (provided
-         (#'leiningen.dynamodb-local/exists? anything) => true))
+          (#'dynamodb-local.core/exists? anything) => true))
 
   (fact "Ensure installed downloads and unpacks DynamoDB Local if it hasn't been already"
-        (ensure-installed) => ...unpack-result...
+        (ensure-installed log-nothing) => ...unpack-result...
         (provided
-         (#'leiningen.dynamodb-local/exists? anything) => false
-         (#'leiningen.dynamodb-local/download-dynamo anything) => ...download-result...
-         (#'leiningen.dynamodb-local/unpack-dynamo) => ...unpack-result...)))
+          (#'dynamodb-local.core/exists? anything) => false
+          (#'dynamodb-local.core/download-dynamo log-nothing anything) => ...download-result...
+          (#'dynamodb-local.core/unpack-dynamo log-nothing) => ...unpack-result...)))
