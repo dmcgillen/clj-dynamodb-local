@@ -4,13 +4,14 @@ clj-dynamodb-local [![Build Status](https://travis-ci.org/dmcgillen/clj-dynamodb
 A Leiningen 2 plugin and boot task providing a local DynamoDB instance to run tests against.
 
 This starts an instance of DynamoDB Local (http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html) provided by Amazon and shuts it down once any proceeding tasks have completed. DynamoDB Local is downloaded on first run, and stored in ~/.clj-dynamodb-local.
+
 ## Usage
+
+[![Clojars Project](http://clojars.org/clj-dynamodb-local/latest-version.svg)](http://clojars.org/clj-dynamodb-local)
 
 #### Leiningen
 
-Add the following to the `:plugins` vector of your project.clj:
-
-[![Clojars Project](http://clojars.org/clj-dynamodb-local/latest-version.svg)](http://clojars.org/clj-dynamodb-local)
+Add this library as a dependency to the `:plugins` vector of your project.clj.
 
 You can start DynamoDB Local, followed by any other tasks you may want to run, using the following:
 
@@ -28,9 +29,7 @@ If run as a background process (e.g. `$ lein dynamodb-local &`) all child proces
 
 #### Boot
 
-Add this library as a dependency in your build.boot file:
-
-[![Clojars Project](http://clojars.org/clj-dynamodb-local/latest-version.svg)](http://clojars.org/clj-dynamodb-local)
+Add this library as a dependency to your build.boot file.
 
 `require` the boot namespace and task provided in the appropriate place in your build.boot:
 
