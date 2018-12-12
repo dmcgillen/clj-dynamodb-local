@@ -1,4 +1,4 @@
-(ns leiningen.unit.dynamodb-local
+(ns dynamodb-local.core-test
   (:require [clojure.test :refer [deftest is testing]]
             [dynamodb-local.core :as sut]
             [environ.core :refer [env]]
