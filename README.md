@@ -45,7 +45,7 @@ Add the `dynamodb-local` boot task into your build pipeline at the appropriate p
         (repl)))
 ```
 
-A shutdown hook will be added to shutdown DynamoDB Local when the JVM exists.
+A shutdown hook will be added to shutdown DynamoDB Local when the JVM exits.
 
 ### Configuration
 
