@@ -1,2 +1,2 @@
 language: clojure
-script: lein midje leiningen.unit.*
+script: lein test

@@ -6,8 +6,7 @@
   :eval-in-leiningen true
   :dependencies [[boot/core "2.6.0" :scope "provided"]
                  [environ "1.0.0"]
+                 [medley "1.0.0" :scope "test"]
                  [net.lingala.zip4j/zip4j "1.3.2"]]
-  :profiles {:dev {:dependencies [[midje "1.7.0"]]
-                   :plugins [[lein-midje "3.1.3"]]}}
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
                                      :creds :gpg}]])
