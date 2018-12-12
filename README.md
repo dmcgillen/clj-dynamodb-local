@@ -28,7 +28,25 @@ If run as a background process (e.g. `$ lein dynamodb-local &`) all child proces
 
 #### Boot
 
-TODO
+Add this library as a dependency in your build.boot file:
+
+[![Clojars Project](http://clojars.org/clj-dynamodb-local/latest-version.svg)](http://clojars.org/clj-dynamodb-local)
+
+`require` the boot namespace and task provided in the appropriate place in your build.boot:
+
+`'[dynamodb-local.boot :refer [dynamodb-local]]`
+
+Add the `dynamodb-local` boot task into your build pipeline at the appropriate point supplying options [#](see below) as necessary, for example:
+
+```clojure
+(deftask development []
+  (comp (testing)
+        (dynamodb-local :project {:dynamodb-local {:port 8090
+                                                   :in-memory? true}})
+        (repl)))
+```
+
+A shutdown hook will be added to shutdown DynamoDB Local when teh JVM exists.
 
 ### Configuration
 
@@ -83,6 +101,6 @@ Pass JVM options to the DynamoDB process. Behaves the same as the 'normal' :jvm-
 
 ## License
 
-Copyright © 2014 Donovan McGillen
+Copyright © 2018 Donovan McGillen
 
 Distributed under the [Eclipse Public License](http://www.eclipse.org/legal/epl-v10.html), the same as Clojure.
