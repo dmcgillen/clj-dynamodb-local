@@ -35,7 +35,7 @@ Add this library as a dependency to your build.boot file.
 
 `'[dynamodb-local.boot :refer [dynamodb-local]]`
 
-Add the `dynamodb-local` boot task into your build pipeline at the appropriate point supplying options [#](see below) as necessary, for example:
+Add the `dynamodb-local` boot task into your build pipeline at the appropriate point, supplying any required [options](#configuration), for example:
 
 ```clojure
 (deftask development []
